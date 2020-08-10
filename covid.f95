@@ -57,15 +57,16 @@ program Covid_model_Spain
   double precision inj,outji
 
   !read(*,"(I4.4,I2,A3,A11,A21,A11)") jjcontrol,a,site,nametripcom1,Readpopfile,nametripcom2
-  read(*,*) jjcontrol,a,site,nametripcom1,Readpopfile,nametripcom2
-  write(*,*) jjcontrol,a,site,nametripcom1,Readpopfile,nametripcom2
-  site=trim(ADJUSTL(site))
-  nametripcom1=trim(ADJUSTL(nametripcom1))
-  nametripcom2=trim(ADJUSTL(nametripcom2))
-  readpopfile=trim(ADJUSTL(readpopfile))
+  !read(*,*) jjcontrol,a,site,nametripcom1,Readpopfile,nametripcom2
+  !write(*,*) jjcontrol,a,site,nametripcom1,Readpopfile,nametripcom2
+  !site=trim(ADJUSTL(site))
+  !nametripcom1=trim(ADJUSTL(nametripcom1))
+  !nametripcom2=trim(ADJUSTL(nametripcom2))
+  !readpopfile=trim(ADJUSTL(readpopfile))
   !Read Parameters from file!
+  read(*,*) jjcontrol
   open(unit=1002,&
-  file="Parameters_"//trim(site)//".dat",&
+  file="Parameters.dat",&
   status="old")
   read(1002,*) dim !total number of populations
   read(1002,*) dt1 !Integration time: Each iteration time moves dt1 forward
@@ -126,10 +127,10 @@ program Covid_model_Spain
 !  nametripLS1="LStrips_average_4_march.dat" !File with long stay number of travelers per day period 1
 !  nametripLS2="LStrips_18_march.dat" !File with long stay number of travelers per day period 2
 
-  nametripcom1="networks/"//trim(nametripcom1) !File with commuting number of travelers per day period 1
+  nametripcom1="networks/Commuting.dat" !File with commuting number of travelers per day period 1
 
-  nametripcom2="networks/"//trim(nametripcom2) !File with commuting number of travelers per day period 2
-  popfile="networks/Population_PS_"//trim(site)//".dat" !File with number of inhabitants
+  nametripcom2="networks/Commuting.dat" !File with commuting number of travelers per day period 2
+  popfile="networks/Population.dat" !File with number of inhabitants
 
   check=.false. !if .true. is detected->program ends
 
@@ -302,13 +303,13 @@ program Covid_model_Spain
 
 
     open(unit=2002,& !Save seed
-    file=trim(site)//"/T_"//trim(str(a))//"/t_zip_n"// &
+    file="Results/T/t_n"// &
     trim(str(jjcontrol))//".dat",&
     status="unknown")
     write(2002,*) "#it  S I R E inc inc/N ID"
 
     open(unit=3002,& !Save seed
-    file=trim(site)//"/sum/sumonzip_a"//trim(str(a))//"_n"// &
+    file="Results/sum/sumonzips_n"// &
     trim(str(jjcontrol))//".dat",&
     status="unknown")
     write(3002,*) "#it  S/N I/N R/N E/N inc/N"
@@ -648,14 +649,14 @@ program Covid_model_Spain
   deallocate(con2)
   !-------------------------------------------------------------------------------------
   !System commands:
-  order="gzip -f "//trim(site)//"/T_"//trim(str(a))//"/t_zip_n"// &
+  order="gzip -f Results/T/t_n"// &
   trim(str(jjcontrol))//".dat"
   status = system( order )
   if ( status .ne. 0 ) then
      stop 'system: error'
   end if
 
-  order="gzip -f "//trim(site)//"/sum/sumonzip_a"//trim(str(a))//"_n"// &
+  order="gzip -f Results/sum/sumonzips_n"// &
   trim(str(jjcontrol))//".dat"
   status = system( order )
   if ( status .ne. 0 ) then
