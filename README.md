@@ -8,3 +8,10 @@ Code associated to simulations of *Aguilar, Javier, et al. "Impact of urban stru
   
   In order to run the test code, just execute the bash script *Super_script_P.sh*, this will:
   1. Compile FORTRAN 95 code.
+  2. Create folders to store output data.
+  3. run code. By default, the code is run one time. The user can change the number of times to execute the code with the variable *realizations* of the *Super_script_P.sh* script.
+  
+  # Aknowledgements
+  
+  Richard Chandler and Paul Northrop, authors of RANDGEN.F (source of Random2.f)  
+  https://www.ucl.ac.uk/~ucakarc/work/software/randgen.txt
