@@ -1,8 +1,14 @@
 # Impact-of-urban-structure-on-COVID-19-spread-Simulation-Code
-Code associated to simulations of *Aguilar, Javier, et al. "Impact of urban structure on COVID-19 spread."
+Code associated to simulations in *Aguilar, Javier, et al. "Impact of urban structure on COVID-19 spread."
   arXiv preprint arXiv:2007.15367 (2020).*  
   
   Due to privacy agreements with google, it is not allowed to share directly the data used in the manuscript. A random fully-connected network is provided (filled with random populations), so it is possible to run tests and grasp the data format.  
+  
+  # Content
+  * <ins>Random2.f<ins> : Library with subroutines/functions to generate pseudorandom numbers.
+  * <ins>dranxor2.f<ins> : Library with subroutines/functions to generate pseudorandom numbers.
+  * <ins>covid.f95<ins> : Main code.
+  * <ins> :Subroutines_Covid.f95<ins> :
   
   # Run code
   
