@@ -130,6 +130,25 @@ subroutine ComputeNeff(dim,dj,dji,Neff,N,Ip,Ih,ICU,D,H)
   end do
 end subroutine ComputeNeff
 
+subroutine ComputeNeffSEIR(dim,dj,dji,Neff,N)
+  !Compute effective populations (people staying+incomming people)
+  implicit none
+  integer*8, intent(in) :: dim
+  integer*8 :: ii,jj
+  integer*8, intent(in) :: N(dim)
+  double precision, intent(out) :: Neff(dim)
+  double precision, dimension (:),intent(in) :: dj(dim),dji(dim,dim)
+  double precision :: Inj,Outji
+
+  Neff=0
+  do ii = 1, dim, 1
+    Neff(ii)=Inj(N(ii),dj(ii)) !People from ii staying at ii
+    do jj = 1, dim, 1 !people from jj going to ii
+      Neff(ii)=Neff(ii)+Outji(N(jj),dj(jj),dji(jj,ii))
+    end do
+  end do
+end subroutine ComputeNeffSEIR
+
 double precision function fpSE(dim,dji,dj,Sj,Ip,Ih,Ia,Po,Ips,j,Neff,ba,bp,bh,bpo,bps,k,dt,t,realiz)
 !Compute DS on population j having into account commuting, this is:
 !Having into account the Sjj that stays in j and get infected by Ijj(I-native of j) and Iij(I-visitors in j)
@@ -188,16 +207,17 @@ double precision function fpSE(dim,dji,dj,Sj,Ip,Ih,Ia,Po,Ips,j,Neff,ba,bp,bh,bpo
 
 end function fpSE
 
-double precision function fpSE2(dim,dji,dj,Sj,In,Out,j,Neff,ba,bp,bh,bpo,bps,k,dt,t,realiz,con)
+double precision function fpSE2(dim,dji,dj,Sj,In,Out,j,Neff,ba,k,dt,t,realiz,con)
 !Compute DS on population j having into account commuting, this is:
 !Having into account the Sjj that stays in j and get infected by Ijj(I-native of j) and Iij(I-visitors in j)
 !and the Sji that leave j for a certain time and come back than can get infected from Iii (I-native of i) and Imi (I-visitors in i).
   implicit none
   integer*8 :: i,l,dum1,dum2
   integer*8, intent(in) :: dim,Sj,j,k,t,realiz
+  double precision, intent(in) :: dt !*
   double precision, intent(in) :: Neff(dim)
   double precision :: lji,ljj,expo,dum
-  double precision, intent(in) :: ba,bp,bh,bps,dt,bpo
+  double precision, intent(in) :: ba
   double precision,dimension(:), intent(in) :: dj(dim)
   double precision,dimension(:,:), intent(in) :: dji(dim,dim)
   integer*8,dimension(:,:),intent(in) :: con(dim,dim+1)
@@ -210,7 +230,6 @@ double precision function fpSE2(dim,dji,dj,Sj,In,Out,j,Neff,ba,bp,bh,bpo,bps,k,d
   do dum1 = 1, con(j,1), 1
     i=con(j,dum1+1)
     lji=0
-      !if ( Out(1,j,i).ne.0 ) then
         lji=lji+In(2,i)*ba!Infecttions in neighbourhood of j
         do dum2 = 1, con(i,1), 1
             l=con(i,dum2+1)
@@ -220,17 +239,15 @@ double precision function fpSE2(dim,dji,dj,Sj,In,Out,j,Neff,ba,bp,bh,bpo,bps,k,d
 
         end do
         expo=expo+lji*Out(1,j,i)/(Sj*Neff(i))
-      !end if
 
   end do
 
   !Infections in j
   ljj=In(2,j)*ba
   do dum1 = 1, con(j,1), 1
-    i=con(j,dum1+1) ! I have to do second loop and if becouse dij could not be symmetric (i could have dij=0 and dji!=0)
-    !if ( Out(1,j,i).ne.0 ) then
-      ljj=ljj+Out(2,i,j)*ba
-    !end if
+    i=con(j,dum1+1) !label of neighbour
+    ljj=ljj+Out(2,i,j)*ba
+
   end do
 
   expo=expo+ljj*In(1,j)/(Sj*Neff(j))
@@ -388,23 +405,19 @@ subroutine check_negative_mov(S,E,Ia,R,Po,Ips,N,out)
   return
 end subroutine check_negative_mov
 
-subroutine check_negative_total(S,E,Ia,Ih,Ip,R,Po,Ips,N,out)
+subroutine check_negative_total(S,E,Ia,R,N,out)
   !Checks if sum over groups is negative (e.g. is S=sum(S)<0?)
   !if so, print message error
   implicit none
   integer*8 i
-  integer*8,intent(in) :: S,E,Ia,Ip,Ih,R,N,Po,Ips
+  integer*8,intent(in) :: S,E,Ia,R,N
   logical, intent(out) :: out
 
   call isitneg(S,out,881) !LABEL DOES NOT WORK!!
   call isitneg(E,out,882)
   call isitneg(Ia,out,883)
-  call isitneg(Ip,out,884)
-  call isitneg(Ih,out,885)
   call isitneg(R,out,886)
   call isitneg(N,out,887)
-  call isitneg(Po,out,888)
-  call isitneg(Ips,out,889)
   if ( out ) then
     write(*,*) "Fatal Error in sum!! Negative people!!",i
   end if
