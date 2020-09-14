@@ -48,7 +48,7 @@ program Covid_model_Spain
   integer*8 i_dran
   double precision, dimension(:, :), ALLOCATABLE :: dumnet1,dumnet2
   character(len=50) str,outfile,histfile,site,Readpopfile,Formato
-  character(len=50) nametripLS1,nametripLS2,nametripcom2,nametripcom1,popfile
+  character(len=50) nametripcom2,nametripcom1,popfile
   character*50 order
   INTEGER*4 status, system
   logical check,logdoc,lockdown
