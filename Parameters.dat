@@ -1,0 +1,5 @@
+998	!1) dim= de number of populations in LA=341
+1.0	!3) dt=Integration time is one day (time units is days rate unit is days^-1)
+800 	!4) itmax= Maximum number of iterations  
+100 	!5) realiz=number of realizations
+3	!6) Initial position of desease
