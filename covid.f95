@@ -442,7 +442,7 @@ program Covid_model_Spain
   close (1)
 
 
-  !--------------------------Deallocate (allocate) arrays-------------------------------
+  !--------------------------Deallocate (allocatable) arrays-------------------------------
   deallocate(Ia)
   deallocate(inc)
   deallocate(R)
