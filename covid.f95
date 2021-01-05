@@ -47,7 +47,8 @@ program Covid_model_Spain
   double precision fpSE2,fpSE
   integer*8 i_dran
   double precision, dimension(:, :), ALLOCATABLE :: dumnet1,dumnet2
-  character(len=50) str,outfile,histfile,site,Readpopfile,Formato
+  !WARNING:: if len=50 is changed, check for coherence in code with subroutines.
+  character(len=50) str,outfile,histfile,site,Readpopfile,Formato 
   character(len=50) nametripcom2,nametripcom1,popfile
   character*50 order
   INTEGER*4 status, system
