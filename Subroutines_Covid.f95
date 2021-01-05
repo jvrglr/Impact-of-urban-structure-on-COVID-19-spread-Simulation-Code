@@ -325,7 +325,7 @@ end function
 
 subroutine read_populations(dim,name,N)
   !Read number of inhabitants of the dim populations
-  !Format of file: dim rows, each row with one population number
+  !Format of file: dim rows, each row with one population (integer) number
   implicit none
   integer*8, intent(in) :: dim
   integer*8,dimension(:), intent(out) :: N(dim)
