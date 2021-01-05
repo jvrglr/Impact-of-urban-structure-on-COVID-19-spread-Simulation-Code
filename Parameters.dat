@@ -1,5 +1,5 @@
-998	!1) dim= de number of s2 cels
-1.0	!3) dt=Integration time (time units is days rate unit is days^-1)
+998	!1) dim= number of nodes (number of S2 cels in our study)
+1.0	!3) dt=Integration time (time units is days, rate unit is days^-1)
 800 	!4) itmax= Maximum number of iterations (Not used in shared code)
 100 	!5) realiz=number of realizations (Not used in shared code)
-3	!6) Initial position of desease
+3	!6) Initial position of desease (between 1 and number of nodes)
