@@ -124,7 +124,7 @@ program Covid_model_Spain
   call check_topology_dble(dumnet2,dim,nametripcom2)
 
   !Dji are the "(sigmas ji)/t" in reference (1).This is, (commutibg rate j->i)/ (return rate)
-  Returnt=1.0d0/3.0d0 !mean return time (for commuting) (inverse of return time)
+  Returnt=1.0d0/3.0d0 !mean return time for commuting (inverse of return rate)
   do j = 1, dim, 1
     do i = 1, dim, 1
       dji1(j,i)=dble(dumnet1(j,i))*Returnt/(dble(N(j))) !period 1: Mobility without lockdown
