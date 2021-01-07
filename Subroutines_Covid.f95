@@ -298,19 +298,28 @@ subroutine check_topology_dble(net,N,name)
   integer*4 :: i,j
   integer*8, intent(in):: N
   double precision,dimension(:,:), intent(in) :: net(N,N)
-  character(len=50), intent(in):: name
+  character(len=200), intent(in):: name
+  logical :: check
 
-  write(*,*) "dim=",N,name
+  check=.True.
+  write(*,*) " Checking Mobility matrix of dim=",N
+  write(*,*) "Imported from file=", name
   do i = 1, N, 1
     do j = 1, N, 1
       if (net(i,j).ne.net(i,j)) then
         write(*,*) "FATAL ERROR (net(i,j)=NaN)",i,j,name
+        check=.False.
       else if (net(i,j).lt.0) then
         write(*,*) "FATAL ERROR (net(i,j)<0)",i,j,name,net(i,j)
+        check=.False.
       endif
     end do
   end do
 
+  if (check) then
+    print *, "EVERYTHING OK"
+  endif
+  
 end subroutine check_topology_dble
 
 integer*8 function map2D (x,y,N)
