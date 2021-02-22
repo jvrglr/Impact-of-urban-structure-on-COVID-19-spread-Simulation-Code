@@ -283,6 +283,8 @@ program Covid_model_Spain
        inc=0
        do ii=1,clock,1 !Integrate SEIR
          !Compute effective groups
+         In=0.0d0
+         Out=0.0d0
          if ( .not.lockdown ) then !Effective  populations having into account commuting, see reference (1)
            !Compute effective groups
            do j=1,dim,1
