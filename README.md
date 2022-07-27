@@ -1,6 +1,5 @@
 # Impact-of-urban-structure-on-COVID-19-spread-Simulation-Code
-Code associated to simulations in *Aguilar, Javier, et al. "Impact of urban structure on COVID-19 spread."
-  arXiv preprint arXiv:2007.15367 (2020).*  
+Code associated to simulations in *Aguilar, Javier, et al. "Impact of urban structure on infectious disease spreading." Scientific reports 12.1 (2022): 1-13.*  
   
   Due to privacy agreements with google, it is not allowed to share directly the data used in the manuscript. A random fully-connected network is provided (filled with random populations), so it is possible to run tests and grasp the data format.  
   
